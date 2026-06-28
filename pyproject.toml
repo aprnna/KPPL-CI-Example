@@ -1,0 +1,26 @@
+[project]
+name = "kppl-ci"
+version = "0.1.0"
+description = "Contoh CI sederhana dengan GitHub Actions dan Python"
+requires-python = ">=3.11"
+
+[tool.uv]
+package = false
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.3",
+    "flake8>=7.1.1",
+]
+
+[tool.flake8]
+max-line-length = 100
+exclude = [".git", "__pycache__", "venv"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

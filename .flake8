@@ -1,0 +1,12 @@
+# File konfigurasi flake8 (linter Python)
+# flake8 membaca file ini secara bawaan, sedangkan section
+# [tool.flake8] di pyproject.toml TIDAK dibaca otomatis.
+[flake8]
+# Batas maksimum panjang satu baris kode (dalam karakter).
+max-line-length = 100
+# Folder/file yang diabaikan saat pemeriksaan.
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv

@@ -1,0 +1,33 @@
+name: CI Pipeline                                 # Nama workflow yang tampil di tab GitHub Actions
+
+on:                                                # Bagian pemicu (trigger) workflow
+  push:                                            # Jalankan saat ada push kode
+    branches: [main, master]                       # Hanya untuk branch main atau master
+  pull_request:                                    # Jalankan saat ada pull request dibuat
+    branches: [main, master]                       # Target PR ke main atau master
+
+jobs:                                             # Definisi job-job yang akan dijalankan
+  test:                                            # Nama job: 'test' (untuk menjalankan testing)
+    runs-on: ubuntu-latest                         # Runner OS: Ubuntu versi terbaru
+
+    steps:                                         # Langkah-langkah (steps) dalam job test
+      - name: Checkout kode                        # Step: ambil kode dari repo ke runner
+        uses: actions/checkout@v4                  # Gunakan action resmi checkout versi v4
+
+      - name: Install uv                           # Step: install uv (package manager Python cepat)
+        uses: astral-sh/setup-uv@v3                # Gunakan action resmi setup-uv dari astral-sh v3
+        with:                                      # Parameter tambahan untuk action ini
+          version: "latest"                        # Pakai versi uv terbaru
+          enable-cache: true                       # Aktifkan cache agar install dependency lebih cepat
+
+      - name: Setup Python                         # Step: siapkan interpreter Python
+        run: uv python install 3.12                # Install Python 3.12 via uv
+
+      - name: Install dependencies                 # Step: install dependency proyek
+        run: uv sync                               # uv sync membaca pyproject.toml & uv.lock lalu install
+
+      - name: Cek format kode dengan Flake8        # Step: linter untuk cek gaya/kesalahan kode
+        run: uv run flake8 app tests               # Jalankan flake8 pada folder app dan tests
+
+      - name: Jalankan unit test                   # Step: jalankan pengujian unit
+        run: uv run pytest tests/ -v               # Jalankan pytest di folder tests dengan output verbose
