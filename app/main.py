@@ -3,7 +3,7 @@ def add(a, b):
     # Docstring: jelaskan fungsi secara singkat
     """Mengembalikan hasil penjumlahan a + b."""
     # Kembalikan hasil a ditambah b
-    return a - b
+    return a + b
 
 
 # Fungsi 'subtract' untuk pengurangan
